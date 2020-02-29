@@ -1,10 +1,10 @@
 {
-  "name": "Dailys",
+  "name": "Dailies",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@ionic/react": "^5.0.0",
-    "@ionic/react-router": "^5.0.0",
+    "@ionic/react": "^5.0.4",
+    "@ionic/react-router": "^5.0.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^8.0.3",
@@ -43,5 +43,5 @@
       "last 1 safari version"
     ]
   },
-  "description": "An Ionic project"
+  "description": "A motivator to get daily mundane tasks done."
 }
