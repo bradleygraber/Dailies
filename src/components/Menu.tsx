@@ -65,15 +65,15 @@ const Menu: React.FunctionComponent<MenuProps> = ({ selectedPage, theme, setThem
               </IonMenuToggle>
             );
           })}
-          <IonItem>
-            <IonLabel>Theme</IonLabel>
-            <IonSelect value={theme.name} interface="popover" onIonChange={themeSelectionChanged} >
-              {themePack.map((t, index) => {
-                return <IonSelectOption key={index} value={t.name}>{t.name}</IonSelectOption>;
-              })}
-            </IonSelect>
-          </IonItem>
         </IonList>
+        <IonItem>
+          <IonLabel>Theme</IonLabel>
+          <IonSelect value={theme.name} interface="popover" onIonChange={themeSelectionChanged} >
+            {themePack.map((t, index) => {
+              return <IonSelectOption key={index} value={t.name}>{t.name}</IonSelectOption>;
+            })}
+          </IonSelect>
+        </IonItem>
 
       </IonContent>
     </IonMenu>
