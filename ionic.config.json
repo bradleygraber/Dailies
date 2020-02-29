@@ -1,5 +1,7 @@
 {
   "name": "Dailys",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }

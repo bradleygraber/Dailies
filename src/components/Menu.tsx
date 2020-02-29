@@ -1,5 +1,5 @@
 import {
-  IonContent,
+  IonContent, IonSelect, IonSelectOption,
   IonIcon,
   IonItem,
   IonLabel,
@@ -11,11 +11,14 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp } from 'ionicons/icons';
+import { themePack, Theme } from '../theme/themeGenerator';
 import './Menu.css';
 
 interface MenuProps extends RouteComponentProps {
   selectedPage: string;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
 }
 
 interface AppPage {
@@ -38,35 +41,13 @@ const appPages: AppPage[] = [
     iosIcon: paperPlaneOutline,
     mdIcon: paperPlaneSharp
   },
-  {
-    title: 'Favorites',
-    url: '/page/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp
-  },
-  {
-    title: 'Archived',
-    url: '/page/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp
-  },
-  {
-    title: 'Trash',
-    url: '/page/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp
-  },
-  {
-    title: 'Spam',
-    url: '/page/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
-  }
 ];
 
-const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
-const Menu: React.FunctionComponent<MenuProps> = ({ selectedPage }) => {
+const Menu: React.FunctionComponent<MenuProps> = ({ selectedPage, theme, setTheme }) => {
+  const themeSelectionChanged = (e: any) => {
+    setTheme(themePack.filter(prop => prop.name === e.detail.value)[0]);
+  };
 
   return (
     <IonMenu contentId="main" type="overlay">
@@ -84,17 +65,16 @@ const Menu: React.FunctionComponent<MenuProps> = ({ selectedPage }) => {
               </IonMenuToggle>
             );
           })}
+          <IonItem>
+            <IonLabel>Theme</IonLabel>
+            <IonSelect value={theme.name} interface="popover" onIonChange={themeSelectionChanged} >
+              {themePack.map((t, index) => {
+                return <IonSelectOption key={index} value={t.name}>{t.name}</IonSelectOption>;
+              })}
+            </IonSelect>
+          </IonItem>
         </IonList>
 
-        <IonList id="labels-list">
-          <IonListHeader>Labels</IonListHeader>
-          {labels.map((label, index) => (
-            <IonItem lines="none" key={index}>
-              <IonIcon slot="start" icon={bookmarkOutline} />
-              <IonLabel>{label}</IonLabel>
-            </IonItem>
-          ))}
-        </IonList>
       </IonContent>
     </IonMenu>
   );

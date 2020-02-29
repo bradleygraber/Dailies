@@ -1,0 +1,8 @@
+{
+  "appId": "com.bradleygraber.dailies",
+  "appName": "Dailies",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

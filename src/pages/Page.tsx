@@ -8,7 +8,7 @@ const Page: React.FC<RouteComponentProps<{ name: string; }>> = ({ match }) => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar mode="ios">
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
