@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp } from 'ionicons/icons';
+import { today, mailSharp, calendar, paperPlaneSharp } from 'ionicons/icons';
 import { themePack, Theme } from '../theme/themeGenerator';
 import './Menu.css';
 
@@ -30,15 +30,15 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Inbox',
-    url: '/page/Inbox',
-    iosIcon: mailOutline,
+    title: 'Today',
+    url: '/page/Today',
+    iosIcon: today,
     mdIcon: mailSharp
   },
   {
-    title: 'Outbox',
-    url: '/page/Outbox',
-    iosIcon: paperPlaneOutline,
+    title: 'History',
+    url: '/page/History',
+    iosIcon: calendar,
     mdIcon: paperPlaneSharp
   },
 ];
@@ -53,8 +53,7 @@ const Menu: React.FunctionComponent<MenuProps> = ({ selectedPage, theme, setThem
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
+          <IonListHeader>Dailies</IonListHeader>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
