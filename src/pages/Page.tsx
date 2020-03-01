@@ -29,7 +29,7 @@ const Page: React.FC<any> = ({ match, setAppData, appData }) => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>{match.params.name}</IonTitle>
+          <IonTitle>{new Intl.DateTimeFormat('en-US', {weekday: "long", dateStyle: "full"}).format(new Date())}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
