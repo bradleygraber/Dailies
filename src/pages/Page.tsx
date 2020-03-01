@@ -1,11 +1,11 @@
 import { IonButtons, IonContent, IonHeader, IonSegment, IonSegmentButton, IonLabel, IonRow, IonCol, IonGrid,
   IonMenuButton, IonPage, IonTitle, IonToolbar, IonItem, IonCheckbox } from '@ionic/react';
-import React from 'react';
+import React, {useState} from 'react';
 import './Page.css';
 
 const Page: React.FC<any> = ({ match, setAppData, appData }) => {
   const ampmSplitTime = 14;
-  const ampmselected = new Date().getHours() < ampmSplitTime ? "amTasks" : "pmTasks";
+  const [ampmselected, setAmpmSelected] = useState(new Date().getHours() < ampmSplitTime ? "amTasks" : "pmTasks");
 
   const dateString = new Date().toLocaleDateString("en-us");
   if (!appData[dateString])
@@ -16,6 +16,10 @@ const Page: React.FC<any> = ({ match, setAppData, appData }) => {
       v[dateString][ampmselected].forEach((task: any) => {if (task.name === e.detail.value) task.value = e.detail.checked})
       return {...v};
     })
+  }
+  const ampmChanged = (e: any) => {
+    if (e.detail && e.detail.value)
+      setAmpmSelected(e.detail.value)
   }
 
   return (
@@ -30,7 +34,7 @@ const Page: React.FC<any> = ({ match, setAppData, appData }) => {
       </IonHeader>
 
       <IonContent>
-        <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} mode="ios" value={ampmselected}>
+        <IonSegment onIonChange={ampmChanged} mode="ios" value={ampmselected}>
           <IonSegmentButton value="amTasks">
             <IonLabel>AM Tasks</IonLabel>
           </IonSegmentButton>
