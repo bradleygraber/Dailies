@@ -17,7 +17,7 @@ const Page: React.FC<any> = ({ match, setAppData, appData }) => {
   const [visibleDate, setVisibleDate] = useState(new Date().getHours() >= daySplitTime ? today : yesterday);
   const [blockInput, setBlockInput] = useState(false);
 
-  const dateString = visibleDate.toLocaleDateString("en-us");
+  const dateString = visibleDate.toLocaleDateString();
 
   const checked = (e: any) => {
     if (blockInput)
@@ -66,7 +66,7 @@ const Page: React.FC<any> = ({ match, setAppData, appData }) => {
           <IonButton id="dateBack" slot="start" fill="clear" class="ion-no-margin ion-padding-horizontal" onClick={dateChanged}>
             <IonIcon slot="icon-only" icon={arrowBackCircleOutline} />
           </IonButton>
-          <IonButton id="dateForward" slot="end" fill="clear" class={visibleDate.toLocaleDateString("en-us") === new Date().toLocaleDateString("en-us") ? "ion-no-margin ion-padding-horizontal ion-hide" : "ion-no-margin ion-padding-horizontal"} onClick={dateChanged}>
+          <IonButton id="dateForward" slot="end" fill="clear" class={visibleDate.toLocaleDateString() === new Date().toLocaleDateString() ? "ion-no-margin ion-padding-horizontal ion-hide" : "ion-no-margin ion-padding-horizontal"} onClick={dateChanged}>
             <IonIcon slot="icon-only" icon={arrowForwardCircleOutline} />
           </IonButton>
           <IonTitle>{new Intl.DateTimeFormat('en-US', {weekday: "long", month: "long", year: "numeric", day: "numeric"}).format(visibleDate)}</IonTitle>
