@@ -1,18 +1,30 @@
 import { IonButtons, IonContent, IonHeader, IonSegment, IonSegmentButton, IonLabel, IonRow, IonCol, IonGrid,
-  IonMenuButton, IonPage, IonTitle, IonToolbar, IonItem, IonCheckbox } from '@ionic/react';
+  IonMenuButton, IonPage, IonTitle, IonToolbar, IonItem, IonCheckbox, IonIcon, IonButton } from '@ionic/react';
 import React, {useState} from 'react';
 import './Page.css';
+import { arrowBackCircleOutline, arrowForwardCircleOutline } from 'ionicons/icons';
+import {amTasks, pmTasks} from '../data/tasks';
 
 const Page: React.FC<any> = ({ match, setAppData, appData }) => {
   const ampmSplitTime = 14;
-  const [ampmselected, setAmpmSelected] = useState(new Date().getHours() < ampmSplitTime ? "amTasks" : "pmTasks");
+  const daySplitTime = 2;
 
-  const dateString = new Date().toLocaleDateString("en-us");
-  if (!appData[dateString])
-    return <IonPage></IonPage>;
+  const today = new Date();
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate()-1);
+
+  const [ampmselected, setAmpmSelected] = useState(new Date().getHours() < ampmSplitTime ? "amTasks" : "pmTasks");
+  const [visibleDate, setVisibleDate] = useState(new Date().getHours() >= daySplitTime ? today : yesterday);
+  const [blockInput, setBlockInput] = useState(false);
+
+  const dateString = visibleDate.toLocaleDateString("en-us");
 
   const checked = (e: any) => {
+    if (blockInput)
+      return;
+
     setAppData((v:any) => {
+      console.log(v);
       v[dateString][ampmselected].forEach((task: any) => {if (task.name === e.detail.value) task.value = e.detail.checked})
       return {...v};
     })
@@ -22,6 +34,28 @@ const Page: React.FC<any> = ({ match, setAppData, appData }) => {
       setAmpmSelected(e.detail.value)
   }
 
+  const setVisibleDateWithBlocking = async (change: number) => {
+    await setBlockInput(true);
+    await setVisibleDate(v => {
+      v.setDate(v.getDate() + change);
+      return new Date(v);
+    });
+    setBlockInput(false);
+  };
+  const dateChanged = (e: any) => {
+    if (e.currentTarget.id === "dateBack") {
+      setVisibleDateWithBlocking(-1);
+    }
+    if (e.currentTarget.id === "dateForward") {
+      setVisibleDateWithBlocking(1);
+    }
+  }
+
+  if (!appData[dateString]) {
+    setAppData((v:any) => {return {...v, [dateString]: {amTasks: [...amTasks], pmTasks: [...pmTasks]}}});
+    return <IonPage></IonPage>;
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -29,7 +63,13 @@ const Page: React.FC<any> = ({ match, setAppData, appData }) => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>{new Intl.DateTimeFormat('en-US', {weekday: "long", month: "long", year: "numeric", day: "numeric"}).format(new Date())}</IonTitle>
+          <IonButton id="dateBack" slot="start" fill="clear" class="ion-no-margin ion-padding-horizontal" onClick={dateChanged}>
+            <IonIcon slot="icon-only" icon={arrowBackCircleOutline} />
+          </IonButton>
+          <IonButton id="dateForward" slot="end" fill="clear" class={visibleDate.toLocaleDateString("en-us") === new Date().toLocaleDateString("en-us") ? "ion-no-margin ion-padding-horizontal ion-hide" : "ion-no-margin ion-padding-horizontal"} onClick={dateChanged}>
+            <IonIcon slot="icon-only" icon={arrowForwardCircleOutline} />
+          </IonButton>
+          <IonTitle>{new Intl.DateTimeFormat('en-US', {weekday: "long", month: "long", year: "numeric", day: "numeric"}).format(visibleDate)}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
