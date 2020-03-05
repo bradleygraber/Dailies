@@ -82,18 +82,8 @@ const Page: React.FC<any> = ({ match, setAppData, appData }) => {
             <IonLabel>PM Tasks</IonLabel>
           </IonSegmentButton>
         </IonSegment>
-        <IonGrid class={ampmselected==="amTasks" ? "" : "ion-hide"}><IonRow>
-            {appData[dateString].amTasks.map((task: any, index: any) => {
-              return (
-                <IonCol key={task.name}>
-                <IonItem >
-                  <IonLabel>{task.name}</IonLabel>
-                  <IonCheckbox slot="end" value={task.name} checked={task.value} onIonChange={checked}/>
-                </IonItem></IonCol>)
-            })}
-        </IonRow></IonGrid>
-        <IonGrid class={ampmselected==="pmTasks" ? "" : "ion-hide"}><IonRow>
-            {appData[dateString].pmTasks.map((task: any, index: any) => {
+        <IonGrid><IonRow>
+            {appData[dateString][ampmselected].map((task: any, index: any) => {
               return (
                 <IonCol key={task.name}>
                 <IonItem>
