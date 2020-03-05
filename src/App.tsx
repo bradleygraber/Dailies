@@ -27,7 +27,7 @@ import applyTheme, { defaultTheme } from './theme/themeGenerator';
 
 /* Theme variables */
 import './theme/variables.css';
-
+import './App.css';
 
 const App: React.FC = () => {
 
